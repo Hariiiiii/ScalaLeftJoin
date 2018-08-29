@@ -1,0 +1,2 @@
+# ScalaLeftJoin
+Apple Assessment
