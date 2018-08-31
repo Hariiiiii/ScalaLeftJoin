@@ -1,0 +1,29 @@
+Use two different mapper classes for both processing the  initial inputs from employee_names.csv and employee_pay.csv, The Key value output from the mappers should be as follows
+a)employee_names.csv
+•	Key(Text) – id
+•	Value(Text) – A flag to indicate the input source(using ‘name’ for the employee details file) + fname + lname 
+b)      employee_pay.csv
+•	Key(Text) – id
+•	Value(Text) – A flag to indicate the input source(using ‘pay’ for the salary file) + Salary + bonus
+
+So here since the two files needs to be parsed separately using two mappers. I’m using
+EmployeeNameMapper.java to process employee_names.csv and
+EmployeePayMapper.java to process employee_pay.csv
+In map reduce API, I have  used MulipleInputFormat to specify which input to go into which mapper. The ouput key value pairs from the mapper go into the reducer, for the Reducer to identify the source of the value we are prepending the values ‘names’ or ‘pay’.
+
+On the reducer every key would be having two values one with prefix ‘names’ and other ‘pay’. Identify the records and from ‘names’ get the customer name corresponding to the id (input key) and from ‘pay’ get the salary and bonus. 
+
+•	In each of the reducer I will have a key & list of values where the key is nothing but the employee ID. The list of values will have the input from both the datasets i.e. employee_names.csv and emplyee_pay.csv.
+•	Now, I will loop through the values present in the list of values in the reducer.
+•	Then, I will split the list of values and check whether the value is of ‘names’ type or ‘pay’ type.
+
+
+if (splitValue[0].equals("names")){
+    fname = splitValue[1]!= null ? splitValue[1].trim(): "fname";
+}
+
+So finally the output Key values from the reducer would be as follows
+a)      Key : ID
+b)      Value : flame + lname + salary + bonus
+
+
